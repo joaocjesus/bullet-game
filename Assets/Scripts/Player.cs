@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private float speed;
     private PlayerInput controls;
+    private bool pause = false;
 
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
@@ -23,9 +24,6 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        controls = new PlayerInput();
-
         // Init values
         health = 10;
         collisionDamage = 10;
@@ -34,12 +32,18 @@ public class Player : MonoBehaviour
         detectionRange = 2f;
 
         UpdateDetectionRangeVisual();
+
+        rb = GetComponent<Rigidbody2D>();
+        controls = new PlayerInput(); // Use GetComponent to get the PlayerInput attached to this GameObject
+
     }
 
     void Update()
     {
+        if (pause) return;
+
         shootingTimer += Time.deltaTime;
-        Debug.Log("enemiesInRange.Count: " + enemiesInRange.Count);
+        //Debug.Log("enemiesInRange.Count: " + enemiesInRange.Count);
         if (shootingTimer >= shootingInterval && enemiesInRange.Count > 0)
         {
             Transform nearestEnemy = FindNearestEnemy();
@@ -90,25 +94,42 @@ public class Player : MonoBehaviour
         Debug.Log("Player has died!");
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.grey;
-        controls.Disable();
-
+        DisableControls();
+        pause = true;
     }
 
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        //Debug.Log("Movement: " + ctx);
-        rb.velocity = ctx.ReadValue<Vector2>() * speed;
+        if (!pause)
+        {
+            //Debug.Log("Movement: " + ctx);
+            rb.velocity = ctx.ReadValue<Vector2>() * speed;
+        }
     }
 
     private void OnEnable()
     {
-        controls.Enable();
+        EnableControls();
     }
 
     private void OnDisable()
     {
-        controls.Disable();
+        DisableControls();
+    }
+
+    // Method to disable player controls
+    public void DisableControls()
+    {
+        Debug.Log("Disabling player controls");
+        controls.Player.Disable();
+        rb.velocity = Vector2.zero; // Stop the player's movement
+    }
+
+    public void EnableControls()
+    {
+        // Enable the player controls
+        controls.Player.Enable();
     }
 
     void Shoot(Transform nearestEnemy, GameObject prefab)
@@ -142,10 +163,10 @@ public class Player : MonoBehaviour
     private void UpdateDetectionRangeVisual()
     {
         Transform detectionRangeTransform = transform.Find("DetectionRange");
-        Debug.Log("Current detection range: " + detectionRange);
+        //Debug.Log("Current detection range: " + detectionRange);
 
         float scaleFactor = detectionRange * 2;
-        Debug.Log("Setting scale to: " + scaleFactor);
+        //Debug.Log("Setting scale to: " + scaleFactor);
 
         detectionRangeTransform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
     }
