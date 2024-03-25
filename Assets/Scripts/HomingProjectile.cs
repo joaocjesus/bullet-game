@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class HomingProjectile : MonoBehaviour, IProjectile
 {
-    public float speed = 10f;
-    public int damage = 1;
+    [SerializeField]
+    private float speed = 10f;
+    [SerializeField]
+    private int damage = 1;
 
     private Transform target;
-    private Vector3 direction;
+    private Vector2 direction;
 
     void Update()
     {

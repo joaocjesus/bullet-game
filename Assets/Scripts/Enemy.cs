@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 10;
+    public int health { get; set; }
+    public int impactDamage { get; set; }
+    public float speed { get; set; }
 
-    public void TakeDamage(int damage)
-    {
+    public void TakeDamage(int damage) {
         health -= damage;
 
         // Check if the enemy is dead

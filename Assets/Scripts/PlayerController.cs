@@ -5,37 +5,24 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private float speed;
     private PlayerInput controls;
     private bool pause = false;
+    private List<Transform> enemiesInRange = new List<Transform>();
+    private float shootingTimer = 0;
 
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
-
-    public float shootingInterval;
-    private float shootingTimer;
-
-    private List<Transform> enemiesInRange = new List<Transform>();
-    public float detectionRange;
-    public int health; // Player health
-
-    public int collisionDamage;
-
+    public float speed = 3f;
+    public float shootingInterval = 1f;
+    public float detectionRange = 2f; // Radius of detection range
+    public int health = 10;
 
     void Awake()
     {
-        // Init values
-        health = 10;
-        collisionDamage = 10;
-        speed = 3f;
-        shootingInterval = 1f;
-        detectionRange = 2f;
-
         UpdateDetectionRangeVisual();
 
         rb = GetComponent<Rigidbody2D>();
         controls = new PlayerInput(); // Use GetComponent to get the PlayerInput attached to this GameObject
-
     }
 
     void Update()
@@ -53,6 +40,8 @@ public class Player : MonoBehaviour
                 shootingTimer = 0f;
             }
         }
+
+        UpdateDetectionRangeVisual();
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -75,11 +64,12 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(collisionDamage); // Collision damage
+            int enemyDamage = collision.gameObject.GetComponent<Enemy>().impactDamage;
+            TakeDamage(enemyDamage); // Collision damage
         }
     }
 
-    void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
         if (health <= 0)
@@ -103,7 +93,6 @@ public class Player : MonoBehaviour
     {
         if (!pause)
         {
-            //Debug.Log("Movement: " + ctx);
             rb.velocity = ctx.ReadValue<Vector2>() * speed;
         }
     }
@@ -146,11 +135,11 @@ public class Player : MonoBehaviour
     {
         Transform nearestEnemy = null;
         float minDistance = Mathf.Infinity;
-        Vector3 currentPosition = transform.position;
+        Vector2 currentPosition = transform.position;
 
         foreach (Transform enemy in enemiesInRange)
         {
-            float distance = Vector3.Distance(enemy.position, currentPosition);
+            float distance = Vector2.Distance(enemy.position, currentPosition);
             if (distance < minDistance)
             {
                 nearestEnemy = enemy;
@@ -163,11 +152,7 @@ public class Player : MonoBehaviour
     private void UpdateDetectionRangeVisual()
     {
         Transform detectionRangeTransform = transform.Find("DetectionRange");
-        //Debug.Log("Current detection range: " + detectionRange);
-
-        float scaleFactor = detectionRange * 2;
-        //Debug.Log("Setting scale to: " + scaleFactor);
-
-        detectionRangeTransform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+        float detectionDiameter = detectionRange * 2;
+        detectionRangeTransform.localScale = new Vector2(detectionDiameter, detectionDiameter);
     }
 }

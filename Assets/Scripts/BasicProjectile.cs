@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HoProjectile : MonoBehaviour, IProjectile
+public class BasicProjectile : MonoBehaviour, IProjectile
 {
     public float speed = 10f;
     public int damage = 1;

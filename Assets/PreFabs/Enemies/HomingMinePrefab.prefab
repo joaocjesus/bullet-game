@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1400283779127123379}
   - component: {fileID: 224301212216813960}
-  - component: {fileID: 3850352396419534015}
   - component: {fileID: 4236376132543564748}
+  - component: {fileID: 9039992145280005758}
   - component: {fileID: -8141526501326234502}
   m_Layer: 0
-  m_Name: EnemyPrefab
+  m_Name: HomingMinePrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2703904121667403261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.59, y: -5.93, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,19 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3850352396419534015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2703904121667403261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc50e8121ea140cb96d37afb7e6229a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 10
 --- !u!60 &4236376132543564748
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -151,6 +138,18 @@ PolygonCollider2D:
       - {x: 0.43359375, y: 0.25}
       - {x: 0, y: 0.5}
   m_UseDelaunayMesh: 0
+--- !u!114 &9039992145280005758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2703904121667403261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eaa0eb229515415d915d520a623bc11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &-8141526501326234502
 Rigidbody2D:
   serializedVersion: 4

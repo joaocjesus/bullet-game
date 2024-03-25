@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5249334640851234690}
   - component: {fileID: 6289147399289987879}
   m_Layer: 0
-  m_Name: DotBulletPrefab
+  m_Name: BasicBulletPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3122659931829175791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.58, y: -2.022, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3122659931829175791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99bb76384f8f94ab3bea6dab78651312, type: 3}
+  m_Script: {fileID: 11500000, guid: b17f60c8e1ea7410c844d4651bfd36e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
